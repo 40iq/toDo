@@ -1,17 +1,15 @@
 export type Task = {
-  id: string;
-  title: string;
-  finished: boolean;
+  id: number;
+  text: string;
+  completed: boolean;
 };
 
 export type Tasks = Task[];
 
 export type AddTask = (text: string) => void;
 
-export type DeleteTask = (id: string) => void;
+export type DeleteTask = (id: number) => void;
 
-export type EditTask = (id: string, text: string) => void;
+export type UpdateTask = (id: number, text: string) => void;
 
-export type FinishTask = (id: string) => void;
-
-export type UnfinishTask = (id: string) => void;
+export type ToggleTask = (id: number) => void;

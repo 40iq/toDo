@@ -6,7 +6,7 @@ type Props = {
   tasks: Tasks;
 };
 
-export const FinishedTasks: FC<Props> = ({ tasks }) => {
+export const CompletedTasks: FC<Props> = ({ tasks }) => {
   return (
     <section className="bg-white min-w-[80vw] p-2">
       <h2>Finished Tasks</h2>

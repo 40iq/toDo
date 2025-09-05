@@ -6,7 +6,7 @@ export const NewTasks: FC = () => {
 
   const { addTask } = useTasks();
 
-  const handleAddTask = () => {
+  const handleAddTask = async () => {
     const text = inputRef.current?.value;
     if (!text || !inputRef.current) return;
     addTask(text);

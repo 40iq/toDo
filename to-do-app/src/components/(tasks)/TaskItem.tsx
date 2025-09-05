@@ -7,27 +7,26 @@ type Props = {
 };
 
 export const TaskItem: FC<Props> = ({ task }) => {
-  const { finishTask, unfinishTask, deleteTask, editTask } = useTasks();
+  const { toggleTask, deleteTask, updateTask } = useTasks();
 
   return (
     <li className="flex justify-between p-2" key={task.id}>
       <input
-        className={`${task.finished ? "line-through" : ""}`}
+        className={`${task.completed ? "line-through" : ""}`}
         type="text"
-        defaultValue={task.title}
+        defaultValue={task.text}
         onChange={() => {}}
         onBlur={(e) => {
           const newText = e.target.value;
-          if (newText !== task.title) editTask(task.id, newText);
+          if (newText !== task.text) updateTask(task.id, newText);
         }}
       />
       <button
         onClick={() => {
-          if (task.finished) unfinishTask(task.id);
-          else finishTask(task.id);
+          toggleTask(task.id);
         }}
       >
-        {task.finished ? "Unfinish" : "Finish"}
+        {task.completed ? "Unfinish" : "Finish"}
       </button>
       <button
         onClick={() => {
