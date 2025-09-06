@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import { useRef, type FC } from "react";
 import type { Task } from "../../models/Task";
 import { useTasks } from "../../hooks/useTask";
 
@@ -9,17 +9,33 @@ type Props = {
 export const TaskItem: FC<Props> = ({ task }) => {
   const { toggleTask, deleteTask, updateTask } = useTasks();
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key !== "Enter" || !inputRef.current) return;
+    inputRef.current.blur();
+  };
+
+  const handleUpdateTask = async () => {
+    const text = inputRef.current?.value.trim();
+    if (!inputRef.current) return;
+    if (!text || text === task.text) {
+      inputRef.current.value = task.text;
+      return;
+    }
+    updateTask(task.id, text);
+  };
+
   return (
     <li className="flex justify-between p-2" key={task.id}>
       <input
+        ref={inputRef}
         className={`${task.completed ? "line-through" : ""}`}
         type="text"
         defaultValue={task.text}
         onChange={() => {}}
-        onBlur={(e) => {
-          const newText = e.target.value;
-          if (newText !== task.text) updateTask(task.id, newText);
-        }}
+        onKeyDown={handleKeyDown}
+        onBlur={handleUpdateTask}
       />
       <button
         onClick={() => {
